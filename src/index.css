@@ -7,3 +7,22 @@ body {
   min-height: 100vh;
   background: linear-gradient(135deg, #0a3d0a 0%, #0d1b0d 50%, #0a3d0a 100%);
 }
+
+/* src/index.css */
+
+/* Em telas muito pequenas (smartphones pequenos), reduz a escala global em 10% a 15% */
+@media (max-width: 380px) {
+  html {
+    font-size: 14px; /* Diminui a fonte base, fazendo todos os 'rem' encolherem juntos */
+  }
+  
+  .fifa-card, .game-card {
+    zoom: 0.9; /* Reduz a escala visual inteira do card no mobile */
+  }
+}
+
+@media (max-width: 320px) {
+  .fifa-card, .game-card {
+    zoom: 0.82;
+  }
+}
