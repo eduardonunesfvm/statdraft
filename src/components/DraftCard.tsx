@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useGameStore } from '../store/useGameStore'
 import { ALL_ATTRIBUTES, ATTRIBUTE_LABELS, ATTRIBUTE_ABBR, type DraftAttributeName } from '../types/game'
-import { Eye, EyeOff, Sparkles } from 'lucide-react'
+import { EyeOff, Sparkles } from 'lucide-react'
 
 function formatAttributeValue(attr: DraftAttributeName, value: number): string {
   if (attr === 'skill' || attr === 'pernaRuim') {
@@ -32,6 +32,7 @@ export default function DraftCard() {
   if (!currentRound) return null
 
   const isExpert = profile.mode === 'expert'
+  const isRare = currentRound.realPlayer.rarity === 'rare'
 
   useEffect(() => {
     setIsSpinning(true)
@@ -49,7 +50,6 @@ export default function DraftCard() {
         setTimeout(() => setShowPlayer(true), 200)
       }
     }, 80)
-
     return () => clearInterval(interval)
   }, [currentRound.round])
 
@@ -62,6 +62,9 @@ export default function DraftCard() {
       setShowPlayer(false)
     }, 400)
   }
+
+  const topAttrs = ALL_ATTRIBUTES.filter(a => a !== 'skill' && a !== 'pernaRuim')
+  const starAttrs: DraftAttributeName[] = ['skill', 'pernaRuim']
 
   return (
     <div className="max-w-lg mx-auto px-4 py-8">
@@ -86,58 +89,107 @@ export default function DraftCard() {
         Rodada {draftState.currentRound} de 8
       </p>
 
-      <div className={`bg-gray-800/80 rounded-xl border border-gray-700 p-5 mb-6 transition-all duration-300 ${stealing ? 'opacity-40 scale-95' : ''}`}>
-        {!showPlayer ? (
-          <div className="flex flex-col items-center justify-center py-8">
-            <div className={`text-3xl font-black transition-all ${isSpinning ? 'text-yellow-400 animate-pulse' : 'text-white'}`}>
-              {spinnerName}
-            </div>
-            <p className="text-gray-500 text-xs mt-2">
-              {isSpinning ? 'Sorteando...' : ''}
-            </p>
+      {!showPlayer ? (
+        <div className="bg-gray-800/80 rounded-2xl border border-gray-700 p-8 mb-6 flex flex-col items-center justify-center min-h-[280px]">
+          <div className={`text-4xl font-black transition-all ${isSpinning ? 'text-yellow-400 animate-pulse' : 'text-white'}`}>
+            {spinnerName}
           </div>
-        ) : (
-          <>
-            <div className="flex items-start gap-4">
-              <div className="w-16 h-16 rounded-full bg-gray-700 flex items-center justify-center text-2xl flex-shrink-0">
-                {currentRound.realPlayer.name.charAt(0)}
-              </div>
-              <div className="flex-1 min-w-0">
-                <h3 className="text-xl font-bold text-white">{currentRound.realPlayer.name}</h3>
-                <p className="text-sm text-gray-400">
+          <p className="text-gray-500 text-sm mt-3">
+            {isSpinning ? 'Sorteando...' : ''}
+          </p>
+        </div>
+      ) : (
+        <div className={`mb-6 transition-all duration-300 ${stealing ? 'opacity-40 scale-95' : ''}`}>
+          <div className={`relative rounded-2xl overflow-hidden border-2 ${
+            isRare ? 'border-yellow-500 shadow-lg shadow-yellow-500/20' : 'border-gray-600'
+          }`}>
+            <div className={`absolute inset-0 ${
+              isRare
+                ? 'bg-gradient-to-br from-yellow-600/40 via-yellow-900/30 to-yellow-800/50'
+                : 'bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900'
+            }`} />
+
+            <div className="relative z-10 px-5 pt-5 pb-4">
+              <div className="flex justify-between items-start mb-3">
+                <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${
+                  isRare
+                    ? 'bg-yellow-500 text-black'
+                    : 'bg-gray-600 text-gray-300'
+                }`}>
                   {currentRound.realPlayer.position}
-                  <span className="text-gray-600 mx-1">|</span>
-                  <span className="text-gray-300">{currentRound.realPlayer.club}</span>
-                  <span className="text-gray-600 mx-1">|</span>
-                  {currentRound.realPlayer.nationality}
-                </p>
-                {currentRound.realPlayer.rarity === 'rare' && (
-                  <span className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 bg-yellow-500/20 text-yellow-400 rounded text-xs font-semibold">
-                    <Sparkles className="w-3 h-3" /> RARO
-                  </span>
+                </span>
+
+                {!isExpert && (
+                  <div className="flex flex-col items-center">
+                    <span className="text-3xl font-black text-white drop-shadow-lg">
+                      {currentRound.realPlayer.attributes.skill}
+                    </span>
+                    <span className="text-yellow-400 text-xs -mt-1">OVR</span>
+                  </div>
+                )}
+                {isExpert && (
+                  <div className="flex items-center gap-1 text-gray-500">
+                    <EyeOff className="w-4 h-4" />
+                  </div>
                 )}
               </div>
-              <div className="text-gray-500">
-                {isExpert ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+
+              <div className="flex items-center gap-4 mt-6 mb-4">
+                <div className={`w-20 h-20 rounded-full flex items-center justify-center text-3xl font-black border-4 flex-shrink-0 ${
+                  isRare
+                    ? 'border-yellow-400 bg-yellow-600/30 text-yellow-200'
+                    : 'border-gray-500 bg-gray-700 text-white'
+                }`}>
+                  {currentRound.realPlayer.name.charAt(0)}
+                </div>
+                <div>
+                  <h3 className="text-2xl font-black text-white drop-shadow-md">
+                    {currentRound.realPlayer.name}
+                  </h3>
+                  <p className="text-sm text-gray-300 mt-0.5">
+                    {currentRound.realPlayer.club}
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    {currentRound.realPlayer.nationality}
+                  </p>
+                  {isRare && (
+                    <span className="inline-flex items-center gap-1 mt-1.5 px-2 py-0.5 bg-yellow-500/30 border border-yellow-400/50 text-yellow-200 rounded text-xs font-bold">
+                      <Sparkles className="w-3 h-3" /> RARO
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-6 gap-1.5">
+                {topAttrs.map(attr => (
+                  <div key={attr} className="text-center">
+                    <p className="text-gray-400 text-[10px] uppercase font-semibold tracking-wider">
+                      {ATTRIBUTE_ABBR[attr]}
+                    </p>
+                    <p className={`text-lg font-black tabular-nums ${
+                      isExpert ? 'text-gray-600' : 'text-white'
+                    }`}>
+                      {isExpert ? '??' : formatAttributeValue(attr, currentRound.realPlayer.attributes[attr])}
+                    </p>
+                  </div>
+                ))}
+                {starAttrs.map(attr => (
+                  <div key={attr} className="text-center">
+                    <p className="text-gray-400 text-[10px] uppercase font-semibold tracking-wider">
+                      {ATTRIBUTE_ABBR[attr]}
+                    </p>
+                    <p className={`text-xs font-black tabular-nums ${
+                      isExpert ? 'text-gray-600' : 'text-yellow-400'
+                    }`}>
+                      {isExpert ? '?' : formatAttributeValue(attr, currentRound.realPlayer.attributes[attr])}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
-
-            <div className="mt-4 grid grid-cols-2 gap-1">
-              {ALL_ATTRIBUTES.map(attr => (
-                <div key={attr} className="flex justify-between text-sm">
-                  <span className="text-gray-400">{ATTRIBUTE_LABELS[attr]}</span>
-                  <span className={isExpert ? 'text-gray-600 font-mono' : 'text-white font-semibold'}>
-                    {isExpert
-                      ? '???'
-                      : formatAttributeValue(attr, currentRound.realPlayer.attributes[attr])
-                    }
-                  </span>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
+          </div>
+        </div>
+      )}
 
       <p className="text-center text-sm text-gray-400 mb-3">
         Escolha um atributo para roubar:

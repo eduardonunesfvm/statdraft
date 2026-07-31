@@ -169,6 +169,22 @@ export function simulateSeason(params: SimulateSeasonParams): SimulateSeasonResu
     }
   })
 
+  const goalParticipations = goals + assists
+  if (goals >= 28) {
+    effectiveAttributes.finalizacao = Math.min(99, effectiveAttributes.finalizacao + 2)
+    effectiveAttributes.drible = Math.min(99, effectiveAttributes.drible + 1)
+    effectiveAttributes.velocidade = Math.min(99, effectiveAttributes.velocidade + 1)
+  }
+  if (assists >= 12) {
+    effectiveAttributes.passe = Math.min(99, effectiveAttributes.passe + 2)
+    effectiveAttributes.drible = Math.min(99, effectiveAttributes.drible + 1)
+  }
+  if (goalParticipations >= 30) {
+    effectiveAttributes.finalizacao = Math.min(99, effectiveAttributes.finalizacao + 1)
+    effectiveAttributes.passe = Math.min(99, effectiveAttributes.passe + 1)
+    effectiveAttributes.fisico = Math.min(99, effectiveAttributes.fisico + 1)
+  }
+
   const proposals = generateTransferProposals(currentClub, clubs, adjustedOverall, seasonWentWell, season)
   const transferProposal: TransferProposal | null = proposals.length > 1
     ? { seasonNumber: season, proposals, fromClub: currentClub }

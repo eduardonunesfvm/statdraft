@@ -129,7 +129,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
   },
 
   selectTransferClub: (club: Club) => {
-    const { career, pendingTransfer } = get()
+    const { career, pendingTransfer, transferProposals } = get()
     if (!career || !pendingTransfer) return
 
     const updated = career.map(s => {
@@ -139,11 +139,19 @@ export const useGameStore = create<GameStore>((set, get) => ({
       return s
     })
 
-    set({ career: updated, pendingTransfer: null })
+    const filtered = transferProposals.filter(
+      tp => tp.seasonNumber > pendingTransfer.seasonNumber
+    )
+
+    set({ career: updated, pendingTransfer: null, transferProposals: filtered })
   },
 
   declineTransfer: () => {
-    set({ pendingTransfer: null })
+    const { transferProposals, pendingTransfer } = get()
+    const filtered = transferProposals.filter(
+      tp => tp.seasonNumber !== pendingTransfer?.seasonNumber
+    )
+    set({ pendingTransfer: null, transferProposals: filtered })
   },
 
   retire: () => {

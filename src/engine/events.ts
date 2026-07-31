@@ -121,45 +121,48 @@ export function generateSeasonEvents(params: GenerateEventsParams): CareerEvent[
 
 type CompetitionMap = Record<ClubTier, Record<string, number>>
 
-const SA_TITLES: CompetitionMap = {
-  'world-class':  { 'Brasileirão': 12, 'Libertadores': 8,  'Mundial de Clubes': 3, 'Copa do Brasil': 10, 'Estadual': 20 },
-  'continental':  { 'Brasileirão': 8,  'Libertadores': 5,  'Mundial de Clubes': 1, 'Copa do Brasil': 8,  'Estadual': 15 },
-  'domestic-top': { 'Brasileirão': 5,  'Libertadores': 3,  'Copa do Brasil': 5,  'Estadual': 10 },
-  'mid-table':    { 'Copa do Brasil': 3,  'Estadual': 5 },
-  'lower':        { 'Estadual': 3 },
+const COUNTRY_COMPETITIONS: Record<string, CompetitionMap> = {
+  'Brasil': {
+    'world-class':  { 'Brasileirão': 12, 'Libertadores': 8,  'Mundial de Clubes': 3, 'Copa do Brasil': 10, 'Estadual': 20 },
+    'continental':  { 'Brasileirão': 8,  'Libertadores': 5,  'Mundial de Clubes': 1, 'Copa do Brasil': 8,  'Estadual': 15 },
+    'domestic-top': { 'Brasileirão': 5,  'Libertadores': 3,  'Copa do Brasil': 5,  'Estadual': 10 },
+    'mid-table':    { 'Copa do Brasil': 3,  'Estadual': 5 },
+    'lower':        { 'Estadual': 3 },
+  },
+  'Argentina': {
+    'world-class':  { 'Campeonato Argentino': 12, 'Libertadores': 8,  'Mundial de Clubes': 3, 'Copa Argentina': 10 },
+    'continental':  { 'Campeonato Argentino': 8,  'Libertadores': 5,  'Mundial de Clubes': 1, 'Copa Argentina': 8 },
+    'domestic-top': { 'Campeonato Argentino': 5,  'Libertadores': 3,  'Copa Argentina': 5 },
+    'mid-table':    { 'Campeonato Argentino': 3, 'Copa Argentina': 3 },
+    'lower':        { 'Campeonato Argentino': 3 },
+  },
+  'Inglaterra': {
+    'world-class':  { 'Premier League': 12, 'Champions League': 8, 'Mundial de Clubes': 3, 'FA Cup': 10, 'EFL Cup': 8 },
+    'continental':  { 'Premier League': 8,  'Champions League': 5, 'FA Cup': 8 },
+    'domestic-top': { 'Premier League': 5, 'FA Cup': 5 },
+    'mid-table':    { 'FA Cup': 3 },
+    'lower':        {},
+  },
+  'Espanha': {
+    'world-class':  { 'LaLiga': 12, 'Champions League': 8, 'Mundial de Clubes': 3, 'Copa del Rey': 10 },
+    'continental':  { 'LaLiga': 8,  'Champions League': 5, 'Copa del Rey': 8 },
+    'domestic-top': { 'LaLiga': 5, 'Copa del Rey': 5 },
+    'mid-table':    { 'Copa del Rey': 3 },
+    'lower':        {},
+  },
 }
 
-const EU_TITLES: CompetitionMap = {
-  'world-class':  { 'Premier League': 12, 'LaLiga': 12, 'Champions League': 8, 'Mundial de Clubes': 3, 'Copa Nacional': 10 },
-  'continental':  { 'Premier League': 8,  'LaLiga': 8, 'Europa League': 5, 'Copa Nacional': 8 },
-  'domestic-top': { 'Liga Nacional': 5, 'Copa Nacional': 5 },
-  'mid-table':    { 'Copa Nacional': 3 },
-  'lower':        {},
-}
-
-function getCompetitionMap(club: Club): CompetitionMap {
-  if (club.continent === 'south-america') {
-    const map = { ...SA_TITLES }
-    if (club.country === 'Argentina') {
-      for (const tierKey of Object.keys(map) as ClubTier[]) {
-        const tier = map[tierKey]
-        ;(tier as Record<string, number>)['Campeonato Argentino'] = (tier as Record<string, number>)['Brasileirão'] ?? 0
-        delete (tier as Record<string, number>)['Brasileirão']
-        ;(tier as Record<string, number>)['Copa Argentina'] = (tier as Record<string, number>)['Copa do Brasil'] ?? 0
-        delete (tier as Record<string, number>)['Copa do Brasil']
-      }
-    }
-    return map
-  }
-  return EU_TITLES
+function getCompetitionMap(club: Club): Record<string, number> {
+  const countryMap = COUNTRY_COMPETITIONS[club.country]
+  if (!countryMap) return {}
+  return countryMap[club.tier] || {}
 }
 
 export function getTitlesForSeason(club: Club): string[] {
   const titles: string[] = []
-  const map = getCompetitionMap(club)
-  const chances = map[club.tier] || {}
+  const chances = getCompetitionMap(club)
   for (const [title, chance] of Object.entries(chances)) {
-    if (roll(chance)) titles.push(title)
+    if (roll(chance as number)) titles.push(title)
   }
   return titles
 }
