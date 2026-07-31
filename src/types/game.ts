@@ -1,4 +1,4 @@
-export type Position = 'GOL' | 'ZAG' | 'LAT' | 'VOL' | 'MEI' | 'PE' | 'PD' | 'ATA'
+export type Position = 'MEI' | 'PE' | 'PD' | 'ATA'
 
 export type GameMode = 'easy' | 'expert'
 
@@ -127,17 +127,13 @@ export interface AwardFormula {
 }
 
 export const POSITION_LABELS: Record<Position, string> = {
-  GOL: 'Goleiro',
-  ZAG: 'Zagueiro',
-  LAT: 'Lateral',
-  VOL: 'Volante',
   MEI: 'Meia',
   PE: 'Ponta Esquerda',
   PD: 'Ponta Direita',
   ATA: 'Atacante',
 }
 
-export const ALL_POSITIONS: Position[] = ['GOL', 'ZAG', 'LAT', 'VOL', 'MEI', 'PE', 'PD', 'ATA']
+export const ALL_POSITIONS: Position[] = ['MEI', 'PE', 'PD', 'ATA']
 
 export const ALL_ATTRIBUTES: DraftAttributeName[] = [
   'velocidade', 'finalizacao', 'passe', 'drible',

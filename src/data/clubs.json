@@ -18,5 +18,11 @@
   {"id":"botafogo","name":"Botafogo","league":"Brasileirão","country":"Brasil","continent":"south-america","tier":"mid-table"},
   {"id":"vasco","name":"Vasco","league":"Brasileirão","country":"Brasil","continent":"south-america","tier":"lower"},
   {"id":"bahia","name":"Bahia","league":"Brasileirão","country":"Brasil","continent":"south-america","tier":"lower"},
-  {"id":"coritiba","name":"Coritiba","league":"Brasileirão","country":"Brasil","continent":"south-america","tier":"lower"}
+  {"id":"coritiba","name":"Coritiba","league":"Brasileirão","country":"Brasil","continent":"south-america","tier":"lower"},
+  {"id":"alnassr","name":"Al-Nassr","league":"Saudi Pro League","country":"Arábia Saudita","continent":"asia","tier":"continental"},
+  {"id":"intermiami","name":"Inter Miami","league":"MLS","country":"Estados Unidos","continent":"north-america","tier":"continental"},
+  {"id":"chelsea","name":"Chelsea","league":"Premier League","country":"Inglaterra","continent":"europe","tier":"world-class"},
+  {"id":"roma","name":"Roma","league":"Serie A","country":"Itália","continent":"europe","tier":"continental"},
+  {"id":"zenit","name":"Zenit","league":"Russian Premier League","country":"Rússia","continent":"europe","tier":"continental"},
+  {"id":"monaco","name":"Monaco","league":"Ligue 1","country":"França","continent":"europe","tier":"continental"}
 ]
