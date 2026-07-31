@@ -1,0 +1,22 @@
+[
+  {"id":"flamengo","name":"Flamengo","league":"Brasileirao","country":"Brasil","tier":"world-class"},
+  {"id":"palmeiras","name":"Palmeiras","league":"Brasileirao","country":"Brasil","tier":"world-class"},
+  {"id":"realmadrid","name":"Real Madrid","league":"LaLiga","country":"Espanha","tier":"world-class"},
+  {"id":"mancity","name":"Manchester City","league":"Premier League","country":"Inglaterra","tier":"world-class"},
+  {"id":"corinthians","name":"Corinthians","league":"Brasileirao","country":"Brasil","tier":"continental"},
+  {"id":"saopaulo","name":"Sao Paulo","league":"Brasileirao","country":"Brasil","tier":"continental"},
+  {"id":"gremio","name":"Gremio","league":"Brasileirao","country":"Brasil","tier":"continental"},
+  {"id":"riverplate","name":"River Plate","league":"Primera Division","country":"Argentina","tier":"continental"},
+  {"id":"bocajuniors","name":"Boca Juniors","league":"Primera Division","country":"Argentina","tier":"continental"},
+  {"id":"santos","name":"Santos","league":"Brasileirao","country":"Brasil","tier":"domestic-top"},
+  {"id":"cruzeiro","name":"Cruzeiro","league":"Brasileirao","country":"Brasil","tier":"domestic-top"},
+  {"id":"atleticomg","name":"Atletico-MG","league":"Brasileirao","country":"Brasil","tier":"domestic-top"},
+  {"id":"fluminense","name":"Fluminense","league":"Brasileirao","country":"Brasil","tier":"domestic-top"},
+  {"id":"internacional","name":"Internacional","league":"Brasileirao","country":"Brasil","tier":"domestic-top"},
+  {"id":"athleticopr","name":"Athletico-PR","league":"Brasileirao","country":"Brasil","tier":"mid-table"},
+  {"id":"fortaleza","name":"Fortaleza","league":"Brasileirao","country":"Brasil","tier":"mid-table"},
+  {"id":"botafogo","name":"Botafogo","league":"Brasileirao","country":"Brasil","tier":"mid-table"},
+  {"id":"vasco","name":"Vasco","league":"Brasileirao","country":"Brasil","tier":"lower"},
+  {"id":"bahia","name":"Bahia","league":"Brasileirao","country":"Brasil","tier":"lower"},
+  {"id":"coritiba","name":"Coritiba","league":"Brasileirao","country":"Brasil","tier":"lower"}
+]

@@ -1,0 +1,17 @@
+[
+  {"id":"haaland","name":"Haaland","position":"ATA","attributes":{"velocidade":89,"finalizacao":93,"passe":68,"drible":80,"skill":4,"pernaRuim":3,"fisico":88,"defesa":30},"nationality":"Noruega","era":"Atual","rarity":"rare"},
+  {"id":"messi","name":"Messi","position":"PE","attributes":{"velocidade":75,"finalizacao":90,"passe":90,"drible":93,"skill":5,"pernaRuim":4,"fisico":62,"defesa":30},"nationality":"Argentina","era":"Atual","rarity":"rare"},
+  {"id":"cr7","name":"Cristiano Ronaldo","position":"ATA","attributes":{"velocidade":72,"finalizacao":90,"passe":77,"drible":82,"skill":5,"pernaRuim":4,"fisico":75,"defesa":32},"nationality":"Portugal","era":"Atual","rarity":"rare"},
+  {"id":"vinijr","name":"Vini Jr","position":"PE","attributes":{"velocidade":95,"finalizacao":83,"passe":78,"drible":91,"skill":5,"pernaRuim":3,"fisico":68,"defesa":28},"nationality":"Brasil","era":"Atual","rarity":"rare"},
+  {"id":"neymar","name":"Neymar","position":"PE","attributes":{"velocidade":85,"finalizacao":82,"passe":84,"drible":92,"skill":5,"pernaRuim":5,"fisico":55,"defesa":28},"nationality":"Brasil","era":"Atual","rarity":"common"},
+  {"id":"estevao","name":"Estevao","position":"PE","attributes":{"velocidade":87,"finalizacao":75,"passe":74,"drible":86,"skill":4,"pernaRuim":3,"fisico":62,"defesa":25},"nationality":"Brasil","era":"Atual","rarity":"common"},
+  {"id":"arrascaeta","name":"Arrascaeta","position":"MEI","attributes":{"velocidade":68,"finalizacao":76,"passe":84,"drible":83,"skill":4,"pernaRuim":3,"fisico":60,"defesa":38},"nationality":"Uruguai","era":"Atual","rarity":"common"},
+  {"id":"veiga","name":"Raphael Veiga","position":"MEI","attributes":{"velocidade":70,"finalizacao":81,"passe":80,"drible":78,"skill":4,"pernaRuim":4,"fisico":65,"defesa":40},"nationality":"Brasil","era":"Atual","rarity":"common"},
+  {"id":"garro","name":"Rodrigo Garro","position":"MEI","attributes":{"velocidade":67,"finalizacao":74,"passe":83,"drible":79,"skill":4,"pernaRuim":3,"fisico":58,"defesa":35},"nationality":"Argentina","era":"Atual","rarity":"common"},
+  {"id":"pedro","name":"Pedro","position":"ATA","attributes":{"velocidade":65,"finalizacao":83,"passe":68,"drible":74,"skill":3,"pernaRuim":3,"fisico":78,"defesa":28},"nationality":"Brasil","era":"Atual","rarity":"common"},
+  {"id":"luizhenrique","name":"Luiz Henrique","position":"PD","attributes":{"velocidade":85,"finalizacao":74,"passe":72,"drible":82,"skill":4,"pernaRuim":3,"fisico":68,"defesa":30},"nationality":"Brasil","era":"Atual","rarity":"common"},
+  {"id":"gerson","name":"Gerson","position":"VOL","attributes":{"velocidade":70,"finalizacao":70,"passe":80,"drible":76,"skill":3,"pernaRuim":3,"fisico":75,"defesa":65},"nationality":"Brasil","era":"Atual","rarity":"common"},
+  {"id":"brenobidon","name":"Breno Bidon","position":"VOL","attributes":{"velocidade":65,"finalizacao":60,"passe":74,"drible":68,"skill":3,"pernaRuim":3,"fisico":70,"defesa":68},"nationality":"Brasil","era":"Atual","rarity":"common"},
+  {"id":"leoortiz","name":"Leo Ortiz","position":"ZAG","attributes":{"velocidade":62,"finalizacao":40,"passe":65,"drible":45,"skill":2,"pernaRuim":2,"fisico":78,"defesa":78},"nationality":"Brasil","era":"Atual","rarity":"common"},
+  {"id":"wesley","name":"Wesley","position":"LAT","attributes":{"velocidade":88,"finalizacao":55,"passe":68,"drible":76,"skill":3,"pernaRuim":3,"fisico":65,"defesa":60},"nationality":"Brasil","era":"Atual","rarity":"common"}
+]
