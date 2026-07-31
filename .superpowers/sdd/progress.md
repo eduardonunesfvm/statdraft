@@ -2,3 +2,4 @@
 Task 2-3: complete (commits c0d1b58..4c83151, types + data ok)
 Task 4-5: complete (commits 4c83151..3d3b5e1, engines ok)
 Task 6-8: complete (commits 3d3b5e1..9d6f41c, simulator+fsm+store ok)
+Task 9-13: complete (commits 9d6f41c..7076f7c, UI components + App ok)
