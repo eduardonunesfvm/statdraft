@@ -1,8 +1,8 @@
-import type { Attributes, PlayerProfile, Club, SeasonStats, CareerEvent, Position } from '../types/game'
+import type { Attributes, PlayerProfile, Club, SeasonStats, CareerEvent, Position, TransferProposal } from '../types/game'
 import { calculateOverall } from './draft'
 import {
   generateSeasonEvents,
-  determineClubForSeason,
+  generateTransferProposals,
   pickStartingClub,
   getTitlesForSeason,
   type GenerateEventsParams,
@@ -28,37 +28,37 @@ export function calculateSeasonStats(
   overall: number,
   position: string
 ): { goals: number; assists: number; appearances: number; yellowCards: number; redCards: number } {
-  const baseGoals = overall * 0.3
-  const baseAssists = overall * 0.2
-  const appearances = 38 + Math.floor(overall / 10)
+  const baseGoals = overall * 0.18
+  const baseAssists = overall * 0.10
+  const appearances = 28 + Math.floor(overall / 10)
 
   let goals: number
   let assists: number
 
   switch (position) {
     case 'ATA':
-      goals = Math.round(baseGoals * 1.8 + randomBetween(-5, 10))
-      assists = Math.round(baseAssists * 0.6 + randomBetween(-3, 5))
+      goals = Math.round(baseGoals * 1.8 + randomBetween(-3, 6))
+      assists = Math.round(baseAssists * 0.6 + randomBetween(-2, 4))
       break
     case 'PE':
     case 'PD':
-      goals = Math.round(baseGoals * 1.2 + randomBetween(-5, 8))
-      assists = Math.round(baseAssists * 1.5 + randomBetween(-3, 8))
+      goals = Math.round(baseGoals * 1.2 + randomBetween(-3, 5))
+      assists = Math.round(baseAssists * 1.5 + randomBetween(-2, 6))
       break
     case 'MEI':
-      goals = Math.round(baseGoals * 0.8 + randomBetween(-3, 6))
-      assists = Math.round(baseAssists * 1.8 + randomBetween(-3, 10))
+      goals = Math.round(baseGoals * 0.8 + randomBetween(-2, 4))
+      assists = Math.round(baseAssists * 1.8 + randomBetween(-2, 8))
       break
     case 'VOL':
-      goals = Math.round(baseGoals * 0.3 + randomBetween(-2, 3))
-      assists = Math.round(baseAssists * 0.8 + randomBetween(-2, 5))
+      goals = Math.round(baseGoals * 0.3 + randomBetween(-1, 2))
+      assists = Math.round(baseAssists * 0.8 + randomBetween(-1, 4))
       break
     case 'LAT':
-      goals = Math.round(baseGoals * 0.15 + randomBetween(-1, 2))
-      assists = Math.round(baseAssists * 0.9 + randomBetween(-2, 6))
+      goals = Math.round(baseGoals * 0.15 + randomBetween(0, 1))
+      assists = Math.round(baseAssists * 0.9 + randomBetween(-1, 4))
       break
     case 'ZAG':
-      goals = Math.round(baseGoals * 0.1 + randomBetween(-1, 2))
+      goals = Math.round(baseGoals * 0.1 + randomBetween(0, 1))
       assists = Math.round(baseAssists * 0.1 + randomBetween(0, 1))
       break
     case 'GOL':
@@ -66,8 +66,8 @@ export function calculateSeasonStats(
       assists = Math.round(baseAssists * 0.05 + randomBetween(0, 1))
       break
     default:
-      goals = Math.round(baseGoals * 0.8 + randomBetween(-3, 6))
-      assists = Math.round(baseAssists * 0.8 + randomBetween(-3, 6))
+      goals = Math.round(baseGoals * 0.8 + randomBetween(-2, 4))
+      assists = Math.round(baseAssists * 0.8 + randomBetween(-2, 6))
   }
 
   goals = Math.max(0, goals)
@@ -91,6 +91,7 @@ export interface SimulateSeasonResult {
   newClub: Club
   careerEnded: boolean
   newAttributes: Attributes
+  transferProposal: TransferProposal | null
 }
 
 export function simulateSeason(params: SimulateSeasonParams): SimulateSeasonResult {
@@ -100,7 +101,7 @@ export function simulateSeason(params: SimulateSeasonParams): SimulateSeasonResu
   const adjustedOverall = Math.min(99, Math.max(1, overall + ageBoost))
 
   const { goals, assists, appearances, yellowCards, redCards } = calculateSeasonStats(adjustedOverall, position)
-  const seasonWentWell = goals + assists >= 25 || adjustedOverall >= 80
+  const seasonWentWell = goals + assists >= 20 || adjustedOverall >= 78
 
   const eventParams: GenerateEventsParams = {
     season, age, overall: adjustedOverall, club: currentClub, goals, assists, seasonWentWell,
@@ -108,7 +109,6 @@ export function simulateSeason(params: SimulateSeasonParams): SimulateSeasonResu
   const events: CareerEvent[] = generateSeasonEvents(eventParams)
   const careerEnded = events.some(e => e.type === 'injury_career_end')
 
-  const newClub = determineClubForSeason(currentClub, clubs, adjustedOverall, seasonWentWell)
   const titlesWon = getTitlesForSeason(currentClub)
 
   if (titlesWon.length > 0) {
@@ -117,8 +117,8 @@ export function simulateSeason(params: SimulateSeasonParams): SimulateSeasonResu
       type: 'title_won',
       season,
       age,
-      title: `Titulo${titlesWon.length > 1 ? 's' : ''}: ${titlesWon.join(', ')}`,
-      description: `Voce conquistou: ${titlesWon.join(', ')}. Uma temporada historica!`,
+      title: `Título${titlesWon.length > 1 ? 's' : ''}: ${titlesWon.join(', ')}`,
+      description: `Você conquistou: ${titlesWon.join(', ')}. Uma temporada histórica!`,
     })
   }
 
@@ -128,7 +128,7 @@ export function simulateSeason(params: SimulateSeasonParams): SimulateSeasonResu
   const pseudoSeason: SeasonStats = {
     season, age, overall: adjustedOverall, club: currentClub,
     appearances, goals, assists, yellowCards, redCards,
-    events, titlesWon, awardsWon: [],
+    events, titlesWon, awardsWon: [], attributes: { ...attributes },
   }
 
   const awardsWon = rollForAwards({
@@ -148,7 +148,7 @@ export function simulateSeason(params: SimulateSeasonParams): SimulateSeasonResu
       season,
       age,
       title: award,
-      description: `Voce venceu o premio ${award}! Um reconhecimento historico ao seu talento.`,
+      description: `Você venceu o prêmio ${award}! Um reconhecimento histórico ao seu talento.`,
     })
   }
 
@@ -169,6 +169,27 @@ export function simulateSeason(params: SimulateSeasonParams): SimulateSeasonResu
     }
   })
 
+  const goalParticipations = goals + assists
+  if (goals >= 28) {
+    effectiveAttributes.finalizacao = Math.min(99, effectiveAttributes.finalizacao + 2)
+    effectiveAttributes.drible = Math.min(99, effectiveAttributes.drible + 1)
+    effectiveAttributes.velocidade = Math.min(99, effectiveAttributes.velocidade + 1)
+  }
+  if (assists >= 12) {
+    effectiveAttributes.passe = Math.min(99, effectiveAttributes.passe + 2)
+    effectiveAttributes.drible = Math.min(99, effectiveAttributes.drible + 1)
+  }
+  if (goalParticipations >= 30) {
+    effectiveAttributes.finalizacao = Math.min(99, effectiveAttributes.finalizacao + 1)
+    effectiveAttributes.passe = Math.min(99, effectiveAttributes.passe + 1)
+    effectiveAttributes.fisico = Math.min(99, effectiveAttributes.fisico + 1)
+  }
+
+  const proposals = generateTransferProposals(currentClub, clubs, adjustedOverall, seasonWentWell, season)
+  const transferProposal: TransferProposal | null = proposals.length > 1
+    ? { seasonNumber: season, proposals, fromClub: currentClub }
+    : null
+
   const seasonStats: SeasonStats = {
     season,
     age,
@@ -182,18 +203,21 @@ export function simulateSeason(params: SimulateSeasonParams): SimulateSeasonResu
     events,
     titlesWon,
     awardsWon,
+    attributes: effectiveAttributes,
   }
 
-  return { seasonStats, newClub, careerEnded, newAttributes: effectiveAttributes }
+  return { seasonStats, newClub: currentClub, careerEnded, newAttributes: effectiveAttributes, transferProposal }
 }
 
 export interface SimulateCareerResult {
   seasons: SeasonStats[]
   careerEndedByInjury: boolean
+  transferProposals: TransferProposal[]
 }
 
 export function simulateCareer(attributes: Attributes, profile: PlayerProfile): SimulateCareerResult {
   const seasons: SeasonStats[] = []
+  const transferProposals: TransferProposal[] = []
   const startAge = 16
   const maxAge = 40
   let careerEndedByInjury = false
@@ -214,11 +238,54 @@ export function simulateCareer(attributes: Attributes, profile: PlayerProfile): 
     currentClub = result.newClub
     currentAttributes = result.newAttributes
 
+    if (result.transferProposal) {
+      transferProposals.push(result.transferProposal)
+    }
+
     if (result.careerEnded) {
       careerEndedByInjury = true
       break
     }
   }
 
-  return { seasons, careerEndedByInjury }
+  return { seasons, careerEndedByInjury, transferProposals }
+}
+
+export function simulateCareerFrom(
+  attributes: Attributes,
+  profile: PlayerProfile,
+  startingClub: Club,
+  startingAge: number,
+  startingSeason: number
+): SimulateCareerResult {
+  const seasons: SeasonStats[] = []
+  const transferProposals: TransferProposal[] = []
+  const maxAge = 40
+  let currentClub = startingClub
+  let currentAttributes = { ...attributes }
+
+  for (let age = startingAge; age <= maxAge; age++) {
+    const season = startingSeason + (age - startingAge)
+    const result = simulateSeason({
+      season,
+      age,
+      attributes: currentAttributes,
+      currentClub,
+      position: profile.position,
+    })
+
+    seasons.push(result.seasonStats)
+    currentClub = result.newClub
+    currentAttributes = result.newAttributes
+
+    if (result.transferProposal) {
+      transferProposals.push(result.transferProposal)
+    }
+
+    if (result.careerEnded) {
+      break
+    }
+  }
+
+  return { seasons, careerEndedByInjury: false, transferProposals }
 }

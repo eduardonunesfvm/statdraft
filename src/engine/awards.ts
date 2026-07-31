@@ -5,29 +5,29 @@ export const AWARD_CATALOG: AwardFormula[] = [
   {
     id: 'ballon_dor', name: 'Bola de Ouro', minOverall: 85, baseMultiplier: 0.10,
     bonuses: [
-      { condition: 'libertadores', label: 'Campeao da Libertadores', bonusPercent: 10 },
-      { condition: 'mundial', label: 'Campeao do Mundial de Clubes', bonusPercent: 8 },
+      { condition: 'libertadores', label: 'Campeão da Libertadores', bonusPercent: 10 },
+      { condition: 'mundial', label: 'Campeão do Mundial de Clubes', bonusPercent: 8 },
       { condition: 'goals_40', label: '40+ gols na temporada', bonusPercent: 5 },
-      { condition: 'assists_25', label: '25+ assistencias', bonusPercent: 5 },
+      { condition: 'assists_25', label: '25+ assistências', bonusPercent: 5 },
       { condition: 'apps_50', label: '50+ jogos na temporada', bonusPercent: 3 },
     ],
   },
   {
-    id: 'rei_da_america', name: 'Rei da America', minOverall: 78, baseMultiplier: 0.15,
+    id: 'rei_da_america', name: 'Rei da América', minOverall: 78, baseMultiplier: 0.15,
     requiresSouthAmerica: true,
     bonuses: [
-      { condition: 'libertadores', label: 'Campeao da Libertadores', bonusPercent: 15 },
+      { condition: 'libertadores', label: 'Campeão da Libertadores', bonusPercent: 15 },
       { condition: 'goals_30', label: '30+ gols na temporada', bonusPercent: 5 },
-      { condition: 'assists_15', label: '15+ assistencias', bonusPercent: 3 },
+      { condition: 'assists_15', label: '15+ assistências', bonusPercent: 3 },
     ],
   },
   {
-    id: 'craque_brasileirao', name: 'Craque do Brasileirao', minOverall: 75, baseMultiplier: 0.12,
+    id: 'craque_brasileirao', name: 'Craque do Brasileirão', minOverall: 75, baseMultiplier: 0.12,
     requiresBrazil: true,
     bonuses: [
-      { condition: 'brasileirao', label: 'Campeao Brasileiro', bonusPercent: 12 },
-      { condition: 'goals_br_25', label: '25+ gols no Brasileirao', bonusPercent: 8 },
-      { condition: 'assists_br_10', label: '10+ assistencias no Brasileirao', bonusPercent: 5 },
+      { condition: 'brasileirao', label: 'Campeão Brasileiro', bonusPercent: 12 },
+      { condition: 'goals_br_25', label: '25+ gols no Brasileirão', bonusPercent: 8 },
+      { condition: 'assists_br_10', label: '10+ assistências no Brasileirão', bonusPercent: 5 },
     ],
   },
   {
@@ -38,11 +38,11 @@ export const AWARD_CATALOG: AwardFormula[] = [
     ],
   },
   {
-    id: 'artilheiro_brasileirao', name: 'Artilheiro do Brasileirao', minOverall: 70, baseMultiplier: 0.01,
+    id: 'artilheiro_brasileirao', name: 'Artilheiro do Brasileirão', minOverall: 70, baseMultiplier: 0.01,
     requiresBrazil: true, positions: ['ATA', 'PE', 'PD', 'MEI'],
     bonuses: [
-      { condition: 'goals_br_25', label: '25+ gols no Brasileirao', bonusPercent: 15 },
-      { condition: 'goals_br_20', label: '20+ gols no Brasileirao', bonusPercent: 5 },
+      { condition: 'goals_br_25', label: '25+ gols no Brasileirão', bonusPercent: 15 },
+      { condition: 'goals_br_20', label: '20+ gols no Brasileirão', bonusPercent: 5 },
     ],
   },
 ]
@@ -71,7 +71,7 @@ export function calculateAwardChance(
         if (season.titlesWon.includes('Mundial de Clubes')) chance += bonus.bonusPercent
         break
       case 'brasileirao':
-        if (season.titlesWon.includes('Brasileirao')) chance += bonus.bonusPercent
+        if (season.titlesWon.includes('Brasileirão')) chance += bonus.bonusPercent
         break
       case 'goals_40':
         if (season.goals >= 40) chance += bonus.bonusPercent

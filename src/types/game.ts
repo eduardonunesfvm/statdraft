@@ -1,4 +1,4 @@
-export type Position = 'GOL' | 'ZAG' | 'LAT' | 'VOL' | 'MEI' | 'PE' | 'PD' | 'ATA'
+export type Position = 'MEI' | 'PE' | 'PD' | 'ATA'
 
 export type GameMode = 'easy' | 'expert'
 
@@ -21,6 +21,7 @@ export interface RealPlayer {
   nationality: string
   era: string
   rarity: 'rare' | 'common'
+  club: string
 }
 
 export type ClubTier = 'world-class' | 'continental' | 'domestic-top' | 'mid-table' | 'lower'
@@ -30,6 +31,7 @@ export interface Club {
   name: string
   league: string
   country: string
+  continent: 'south-america' | 'europe'
   tier: ClubTier
 }
 
@@ -58,6 +60,7 @@ export interface DraftState {
 export type CareerEventType =
   | 'transfer_up'
   | 'transfer_down'
+  | 'transfer_proposal'
   | 'injury_light'
   | 'injury_severe'
   | 'injury_career_end'
@@ -82,6 +85,12 @@ export interface CareerEvent {
   }
 }
 
+export interface TransferProposal {
+  seasonNumber: number
+  proposals: Club[]
+  fromClub: Club
+}
+
 export interface SeasonStats {
   season: number
   age: number
@@ -95,6 +104,7 @@ export interface SeasonStats {
   events: CareerEvent[]
   titlesWon: string[]
   awardsWon: string[]
+  attributes: Attributes
 }
 
 export type GamePhase = 'setup' | 'draft' | 'simulation' | 'summary'
@@ -117,17 +127,13 @@ export interface AwardFormula {
 }
 
 export const POSITION_LABELS: Record<Position, string> = {
-  GOL: 'Goleiro',
-  ZAG: 'Zagueiro',
-  LAT: 'Lateral',
-  VOL: 'Volante',
   MEI: 'Meia',
   PE: 'Ponta Esquerda',
   PD: 'Ponta Direita',
   ATA: 'Atacante',
 }
 
-export const ALL_POSITIONS: Position[] = ['GOL', 'ZAG', 'LAT', 'VOL', 'MEI', 'PE', 'PD', 'ATA']
+export const ALL_POSITIONS: Position[] = ['MEI', 'PE', 'PD', 'ATA']
 
 export const ALL_ATTRIBUTES: DraftAttributeName[] = [
   'velocidade', 'finalizacao', 'passe', 'drible',
@@ -136,11 +142,22 @@ export const ALL_ATTRIBUTES: DraftAttributeName[] = [
 
 export const ATTRIBUTE_LABELS: Record<DraftAttributeName, string> = {
   velocidade: 'Velocidade',
-  finalizacao: 'Finalizacao',
+  finalizacao: 'Finalização',
   passe: 'Passe',
   drible: 'Drible',
   skill: 'Skill',
   pernaRuim: 'Perna Ruim',
-  fisico: 'Fisico',
+  fisico: 'Físico',
   defesa: 'Defesa',
+}
+
+export const ATTRIBUTE_ABBR: Record<DraftAttributeName, string> = {
+  velocidade: 'VEL',
+  finalizacao: 'FIN',
+  passe: 'PAS',
+  drible: 'DRI',
+  skill: 'SKL',
+  pernaRuim: 'PER',
+  fisico: 'FIS',
+  defesa: 'DEF',
 }
