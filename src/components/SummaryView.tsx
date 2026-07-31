@@ -50,7 +50,7 @@ export default function SummaryView() {
       </div>
 
       <div className="bg-gray-800/60 rounded-xl border border-gray-700 p-4 mb-4">
-        <h2 className="text-sm font-semibold text-gray-400 mb-3">Numeros da Carreira</h2>
+        <h2 className="text-sm font-semibold text-gray-400 mb-3">Números da Carreira</h2>
         <div className="grid grid-cols-2 gap-3">
           <div className="flex items-center gap-2">
             <Footprints className="w-4 h-4 text-blue-400" />
@@ -70,14 +70,14 @@ export default function SummaryView() {
             <Zap className="w-4 h-4 text-yellow-400" />
             <div>
               <p className="text-lg font-bold text-white">{stats.totalAssists}</p>
-              <p className="text-xs text-gray-500">Assistencias</p>
+              <p className="text-xs text-gray-500">Assistências</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <Trophy className="w-4 h-4 text-purple-400" />
             <div>
               <p className="text-lg font-bold text-white">{stats.peakOverall}</p>
-              <p className="text-xs text-gray-500">Overall Maximo</p>
+              <p className="text-xs text-gray-500">Overall Máximo</p>
             </div>
           </div>
         </div>
@@ -86,7 +86,7 @@ export default function SummaryView() {
       {Object.keys(titleGroups).length > 0 && (
         <div className="bg-yellow-500/5 border border-yellow-500/20 rounded-xl p-4 mb-4">
           <h2 className="text-sm font-semibold text-yellow-300 mb-3 flex items-center gap-2">
-            <Trophy className="w-4 h-4" /> Galeria de Titulos
+            <Trophy className="w-4 h-4" /> Galeria de Títulos
           </h2>
           <div className="space-y-2">
             {Object.entries(titleGroups).map(([title, items]) => (
@@ -102,7 +102,7 @@ export default function SummaryView() {
       {Object.keys(awardGroups).length > 0 && (
         <div className="bg-purple-500/5 border border-purple-500/20 rounded-xl p-4 mb-4">
           <h2 className="text-sm font-semibold text-purple-300 mb-3 flex items-center gap-2">
-            <Award className="w-4 h-4" /> Premios Individuais
+            <Award className="w-4 h-4" /> Prêmios Individuais
           </h2>
           <div className="space-y-2">
             {Object.entries(awardGroups).map(([award, items]) => (

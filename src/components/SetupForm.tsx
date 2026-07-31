@@ -14,9 +14,9 @@ export default function SetupForm() {
 
   const validate = (): boolean => {
     const errs: Record<string, string> = {}
-    if (!name.trim()) errs.name = 'Nome obrigatorio'
+    if (!name.trim()) errs.name = 'Nome obrigatório'
     const num = parseInt(shirtNumber)
-    if (!shirtNumber || num < 1 || num > 99) errs.shirtNumber = 'Numero entre 1 e 99'
+    if (!shirtNumber || num < 1 || num > 99) errs.shirtNumber = 'Número entre 1 e 99'
     setErrors(errs)
     return Object.keys(errs).length === 0
   }
@@ -54,7 +54,7 @@ export default function SetupForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1">Numero da Camisa</label>
+          <label className="block text-sm font-medium text-gray-300 mb-1">Número da Camisa</label>
           <input
             type="number"
             min={1}
@@ -68,7 +68,7 @@ export default function SetupForm() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1">Posicao</label>
+          <label className="block text-sm font-medium text-gray-300 mb-1">Posição</label>
           <select
             value={position}
             onChange={e => setPosition(e.target.value as Position)}
@@ -93,7 +93,7 @@ export default function SetupForm() {
               }`}
             >
               <div className="font-semibold">Facil</div>
-              <div className="text-xs mt-1 opacity-80">Atributos visiveis</div>
+              <div className="text-xs mt-1 opacity-80">Atributos visíveis</div>
             </button>
             <button
               type="button"
@@ -116,7 +116,7 @@ export default function SetupForm() {
           type="submit"
           className="w-full py-3 bg-green-600 hover:bg-green-500 text-white font-bold rounded-lg transition-colors text-lg"
         >
-          COMECAR DRAFT
+          COMEÇAR DRAFT
         </button>
       </form>
     </div>

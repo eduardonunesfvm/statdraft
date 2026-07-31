@@ -21,7 +21,7 @@ function App() {
           {(['setup', 'draft', 'simulation', 'summary'] as const).map((p, i) => (
             <span key={p} className="flex items-center gap-2">
               <span className={`${p === phase ? 'text-green-400 font-semibold' : ''}`}>
-                {p === 'setup' && 'Criacao'}
+                {p === 'setup' && 'Criação'}
                 {p === 'draft' && 'Draft'}
                 {p === 'simulation' && 'Carreira'}
                 {p === 'summary' && 'Resumo'}
