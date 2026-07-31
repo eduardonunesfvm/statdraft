@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import type { GamePhase, PlayerProfile, DraftState, Attributes, SeasonStats, DraftAttributeName, RealPlayer, Club, TransferProposal } from '../types/game'
 import { GameFSM } from '../fsm/gameFsm'
 import { createInitialDraftState, pickRandomPlayer, stealAttribute, isDraftComplete } from '../engine/draft'
-import { simulateCareer } from '../engine/simulator'
+import { simulateCareer, simulateCareerFrom } from '../engine/simulator'
 import playersData from '../data/players.json'
 
 const allPlayers: RealPlayer[] = playersData as RealPlayer[]
@@ -129,21 +129,34 @@ export const useGameStore = create<GameStore>((set, get) => ({
   },
 
   selectTransferClub: (club: Club) => {
-    const { career, pendingTransfer, transferProposals } = get()
-    if (!career || !pendingTransfer) return
+    const { career, pendingTransfer, profile } = get()
+    if (!career || !pendingTransfer || !profile) return
 
-    const updated = career.map(s => {
-      if (s.season >= pendingTransfer.seasonNumber) {
-        return { ...s, club }
-      }
-      return s
-    })
+    const transferIdx = career.findIndex(s => s.season === pendingTransfer.seasonNumber)
+    if (transferIdx < 0) return
 
-    const filtered = transferProposals.filter(
-      tp => tp.seasonNumber > pendingTransfer.seasonNumber
+    const prevSeason = transferIdx > 0 ? career[transferIdx - 1] : null
+    const entrySeason = career[transferIdx]
+    const baseAttrs = prevSeason ? { ...prevSeason.attributes } : { ...entrySeason.attributes }
+
+    const result = simulateCareerFrom(
+      baseAttrs,
+      profile,
+      club,
+      entrySeason.age,
+      entrySeason.season
     )
 
-    set({ career: updated, pendingTransfer: null, transferProposals: filtered })
+    const updated = [
+      ...career.slice(0, transferIdx),
+      ...result.seasons,
+    ]
+
+    set({
+      career: updated,
+      pendingTransfer: null,
+      transferProposals: result.transferProposals,
+    })
   },
 
   declineTransfer: () => {

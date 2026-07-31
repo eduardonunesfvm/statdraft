@@ -128,7 +128,7 @@ export function simulateSeason(params: SimulateSeasonParams): SimulateSeasonResu
   const pseudoSeason: SeasonStats = {
     season, age, overall: adjustedOverall, club: currentClub,
     appearances, goals, assists, yellowCards, redCards,
-    events, titlesWon, awardsWon: [],
+    events, titlesWon, awardsWon: [], attributes: { ...attributes },
   }
 
   const awardsWon = rollForAwards({
@@ -203,6 +203,7 @@ export function simulateSeason(params: SimulateSeasonParams): SimulateSeasonResu
     events,
     titlesWon,
     awardsWon,
+    attributes: effectiveAttributes,
   }
 
   return { seasonStats, newClub: currentClub, careerEnded, newAttributes: effectiveAttributes, transferProposal }
@@ -248,4 +249,43 @@ export function simulateCareer(attributes: Attributes, profile: PlayerProfile): 
   }
 
   return { seasons, careerEndedByInjury, transferProposals }
+}
+
+export function simulateCareerFrom(
+  attributes: Attributes,
+  profile: PlayerProfile,
+  startingClub: Club,
+  startingAge: number,
+  startingSeason: number
+): SimulateCareerResult {
+  const seasons: SeasonStats[] = []
+  const transferProposals: TransferProposal[] = []
+  const maxAge = 40
+  let currentClub = startingClub
+  let currentAttributes = { ...attributes }
+
+  for (let age = startingAge; age <= maxAge; age++) {
+    const season = startingSeason + (age - startingAge)
+    const result = simulateSeason({
+      season,
+      age,
+      attributes: currentAttributes,
+      currentClub,
+      position: profile.position,
+    })
+
+    seasons.push(result.seasonStats)
+    currentClub = result.newClub
+    currentAttributes = result.newAttributes
+
+    if (result.transferProposal) {
+      transferProposals.push(result.transferProposal)
+    }
+
+    if (result.careerEnded) {
+      break
+    }
+  }
+
+  return { seasons, careerEndedByInjury: false, transferProposals }
 }

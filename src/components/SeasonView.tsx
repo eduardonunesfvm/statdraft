@@ -70,7 +70,7 @@ export default function SeasonView() {
               onClick={declineTransfer}
               className="w-full py-2 text-xs text-gray-500 hover:text-gray-300 transition-colors"
             >
-              Recusar todas e continuar no {pendingTransfer.fromClub.name}
+              Recusar todas e continuar no {season.club.name}
             </button>
           </div>
         </div>

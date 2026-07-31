@@ -104,6 +104,7 @@ export interface SeasonStats {
   events: CareerEvent[]
   titlesWon: string[]
   awardsWon: string[]
+  attributes: Attributes
 }
 
 export type GamePhase = 'setup' | 'draft' | 'simulation' | 'summary'
