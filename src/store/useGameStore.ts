@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { GamePhase, PlayerProfile, DraftState, Attributes, SeasonStats, DraftAttributeName, RealPlayer } from '../types/game'
+import type { GamePhase, PlayerProfile, DraftState, Attributes, SeasonStats, DraftAttributeName, RealPlayer, Club, TransferProposal } from '../types/game'
 import { GameFSM } from '../fsm/gameFsm'
 import { createInitialDraftState, pickRandomPlayer, stealAttribute, isDraftComplete } from '../engine/draft'
 import { simulateCareer } from '../engine/simulator'
@@ -15,10 +15,14 @@ interface GameStore {
   career: SeasonStats[] | null
   currentSeasonIndex: number
   isSimulationComplete: boolean
+  pendingTransfer: TransferProposal | null
+  transferProposals: TransferProposal[]
 
   startDraft: (profile: PlayerProfile) => void
   stealStat: (attribute: DraftAttributeName) => void
   advanceSeason: () => void
+  selectTransferClub: (club: Club) => void
+  declineTransfer: () => void
   retire: () => void
   restart: () => void
 
@@ -36,6 +40,8 @@ export const useGameStore = create<GameStore>((set, get) => ({
   career: null,
   currentSeasonIndex: 0,
   isSimulationComplete: false,
+  pendingTransfer: null,
+  transferProposals: [],
 
   startDraft: (profile: PlayerProfile) => {
     fsm.transition('draft')
@@ -79,6 +85,8 @@ export const useGameStore = create<GameStore>((set, get) => ({
         career: career.seasons,
         currentSeasonIndex: 0,
         isSimulationComplete: false,
+        transferProposals: career.transferProposals,
+        pendingTransfer: null,
       })
       return
     }
@@ -102,14 +110,40 @@ export const useGameStore = create<GameStore>((set, get) => ({
   },
 
   advanceSeason: () => {
-    const { career, currentSeasonIndex } = get()
+    const { career, currentSeasonIndex, transferProposals } = get()
     if (!career) return
+
     const nextIndex = currentSeasonIndex + 1
     if (nextIndex >= career.length) {
       set({ isSimulationComplete: true })
       return
     }
-    set({ currentSeasonIndex: nextIndex })
+
+    const nextSeason = career[nextIndex]
+    const proposal = transferProposals.find(tp => tp.seasonNumber === nextSeason.season && tp.proposals.length > 0)
+
+    set({
+      currentSeasonIndex: nextIndex,
+      pendingTransfer: proposal ?? null,
+    })
+  },
+
+  selectTransferClub: (club: Club) => {
+    const { career, pendingTransfer } = get()
+    if (!career || !pendingTransfer) return
+
+    const updated = career.map(s => {
+      if (s.season >= pendingTransfer.seasonNumber) {
+        return { ...s, club }
+      }
+      return s
+    })
+
+    set({ career: updated, pendingTransfer: null })
+  },
+
+  declineTransfer: () => {
+    set({ pendingTransfer: null })
   },
 
   retire: () => {
@@ -127,6 +161,8 @@ export const useGameStore = create<GameStore>((set, get) => ({
       career: null,
       currentSeasonIndex: 0,
       isSimulationComplete: false,
+      pendingTransfer: null,
+      transferProposals: [],
     })
   },
 

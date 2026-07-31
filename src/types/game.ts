@@ -21,6 +21,7 @@ export interface RealPlayer {
   nationality: string
   era: string
   rarity: 'rare' | 'common'
+  club: string
 }
 
 export type ClubTier = 'world-class' | 'continental' | 'domestic-top' | 'mid-table' | 'lower'
@@ -30,6 +31,7 @@ export interface Club {
   name: string
   league: string
   country: string
+  continent: 'south-america' | 'europe'
   tier: ClubTier
 }
 
@@ -58,6 +60,7 @@ export interface DraftState {
 export type CareerEventType =
   | 'transfer_up'
   | 'transfer_down'
+  | 'transfer_proposal'
   | 'injury_light'
   | 'injury_severe'
   | 'injury_career_end'
@@ -80,6 +83,12 @@ export interface CareerEvent {
     overallChange?: number
     attributeChange?: Partial<Attributes>
   }
+}
+
+export interface TransferProposal {
+  seasonNumber: number
+  proposals: Club[]
+  fromClub: Club
 }
 
 export interface SeasonStats {
@@ -136,11 +145,22 @@ export const ALL_ATTRIBUTES: DraftAttributeName[] = [
 
 export const ATTRIBUTE_LABELS: Record<DraftAttributeName, string> = {
   velocidade: 'Velocidade',
-  finalizacao: 'Finalizacao',
+  finalizacao: 'Finalização',
   passe: 'Passe',
   drible: 'Drible',
   skill: 'Skill',
   pernaRuim: 'Perna Ruim',
-  fisico: 'Fisico',
+  fisico: 'Físico',
   defesa: 'Defesa',
+}
+
+export const ATTRIBUTE_ABBR: Record<DraftAttributeName, string> = {
+  velocidade: 'VEL',
+  finalizacao: 'FIN',
+  passe: 'PAS',
+  drible: 'DRI',
+  skill: 'SKL',
+  pernaRuim: 'PER',
+  fisico: 'FIS',
+  defesa: 'DEF',
 }
