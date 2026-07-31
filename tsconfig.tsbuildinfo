@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/components/draftcard.tsx","./src/components/seasonview.tsx","./src/components/setupform.tsx","./src/components/summaryview.tsx","./src/engine/awards.ts","./src/engine/draft.ts","./src/engine/events.ts","./src/engine/simulator.ts","./src/fsm/gamefsm.ts","./src/store/usegamestore.ts","./src/types/game.ts"],"version":"5.6.3"}
