@@ -28,7 +28,7 @@ export function calculateSeasonStats(
   overall: number,
   position: string
 ): { goals: number; assists: number; appearances: number; yellowCards: number; redCards: number } {
-  const baseGoals = overall * 0.18
+  const baseGoals = overall * 0.10
   const baseAssists = overall * 0.10
   const appearances = 28 + Math.floor(overall / 10)
 
@@ -37,8 +37,8 @@ export function calculateSeasonStats(
 
   switch (position) {
     case 'ATA':
-      goals = Math.round(baseGoals * 1.8 + randomBetween(-3, 6))
-      assists = Math.round(baseAssists * 0.6 + randomBetween(-2, 4))
+      goals = Math.round(baseGoals * 1.3 + randomBetween(-3, 6))
+      assists = Math.round(baseAssists * 0.35 + randomBetween(-2, 4))
       break
     case 'PE':
     case 'PD':
