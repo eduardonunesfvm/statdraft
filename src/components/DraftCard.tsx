@@ -51,7 +51,105 @@ const SPINNER_NAMES = [
   'Keno',
   'Yeferson Soteldo',
   'Ferreira',
-  'Guilherme'
+  'Guilherme',
+
+  'Bruno Henrique',
+  'Everton Cebolinha',
+  'Alex Sandro',
+  'Léo Pereira',
+  'Jorginho',
+
+  'Facundo Torres',
+  'Vitor Roque',
+  'Piquerez',
+  'Gustavo Gómez',
+  'Aníbal Moreno',
+
+  'Memphis Depay',
+  'André Ramalho',
+  'Matheuzinho',
+  'Charles',
+
+  'Kaio Jorge',
+  'William',
+  'Lucas Silva',
+  'Villalba',
+
+  'Arboleda',
+  'Alan Franco',
+  'Wendell',
+  'Bobadilla',
+
+  'Paulinho',
+  'Philippe',
+  'Jair',
+
+  'Kanu',
+  'Rezende',
+  'Gabriel Xavier',
+
+  'Alex Telles',
+  'Marlon Freitas',
+  'Alexander Barboza',
+
+  'Germán Cano',
+  'Thiago Silva',
+  'Ignácio',
+  'Lima',
+
+  'Guilherme Arana',
+  'Battaglia',
+  'Gabriel Menino',
+
+  'Vitão',
+  'Bernabei',
+  'Thiago Maia',
+
+  'Zé Rafael',
+  'Escobar',
+
+  'Neto Moura',
+  'Denilson',
+  'Edson Carioca',
+  'Shaylon',
+  'Reinaldo',
+  'Igor Formiga',
+
+  'Eduardo Sasha',
+  'Jhon Jhon',
+  'Lincoln',
+  'Matheus Fernandes',
+  'Fabinho Coelho',
+
+  'Carlos Vinícius',
+  'Kannemann',
+  'Marcos Rocha',
+  'Marlon',
+  'Dodi',
+  'Cristian Olivera',
+
+  'Alerrandro',
+  'Renato Kayzer',
+  'Léo Naldi',
+  'Camutanga',
+
+  'Kevin Viveros',
+  'Juan Portilla',
+  'Canobbio',
+  'Esquivel',
+
+  'Natanael',
+  'Robson',
+  'Zé Vitor',
+
+  'Perotti',
+  'Marcinho',
+  'Anderson Uchôa',
+
+  'Pedro Rocha',
+  'Yago Pikachu',
+  'Marcos Vinícius',
+  'Bryan Borges'
 ]
 
 export default function DraftCard() {
@@ -110,13 +208,12 @@ export default function DraftCard() {
         {Array.from({ length: 8 }, (_, i) => (
           <div
             key={i}
-            className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
-              i < draftState.currentRound - 1
-                ? 'bg-green-500 text-white'
-                : i === draftState.currentRound - 1
+            className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold transition-all ${i < draftState.currentRound - 1
+              ? 'bg-green-500 text-white'
+              : i === draftState.currentRound - 1
                 ? 'bg-yellow-500 text-black ring-2 ring-yellow-300'
                 : 'bg-gray-700 text-gray-500'
-            }`}
+              }`}
           >
             {i + 1}
           </div>
@@ -138,23 +235,20 @@ export default function DraftCard() {
         </div>
       ) : (
         <div className={`mb-6 transition-all duration-300 ${stealing ? 'opacity-40 scale-95' : ''}`}>
-          <div className={`relative rounded-2xl overflow-hidden border-2 ${
-            isRare ? 'border-yellow-500 shadow-lg shadow-yellow-500/20' : 'border-gray-600'
-          }`}>
-            <div className={`absolute inset-0 ${
-              isRare
-                ? 'bg-gradient-to-br from-yellow-600/40 via-yellow-900/30 to-yellow-800/50'
-                : 'bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900'
-            }`} />
+          <div className={`relative rounded-2xl overflow-hidden border-2 ${isRare ? 'border-yellow-500 shadow-lg shadow-yellow-500/20' : 'border-gray-600'
+            }`}>
+            <div className={`absolute inset-0 ${isRare
+              ? 'bg-gradient-to-br from-yellow-600/40 via-yellow-900/30 to-yellow-800/50'
+              : 'bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900'
+              }`} />
 
             <div className="relative z-10 px-5 pt-5 pb-4">
               {/* Header do Card: Posição + Badge OVR ou EyeOff */}
               <div className="flex justify-between items-start mb-3">
-                <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${
-                  isRare
-                    ? 'bg-yellow-500 text-black'
-                    : 'bg-gray-600 text-gray-300'
-                }`}>
+                <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${isRare
+                  ? 'bg-yellow-500 text-black'
+                  : 'bg-gray-600 text-gray-300'
+                  }`}>
                   {currentRound.realPlayer.position}
                 </span>
 
@@ -175,22 +269,21 @@ export default function DraftCard() {
 
               {/* Informações do Jogador + Avatar + Escudo */}
               <div className="flex items-center gap-4 mt-4 mb-4">
-                <div className={`p-1 rounded-full border-4 flex-shrink-0 ${
-                  isRare ? 'border-yellow-400 bg-yellow-600/20' : 'border-gray-500 bg-gray-700'
-                }`}>
+                <div className={`p-1 rounded-full border-4 flex-shrink-0 ${isRare ? 'border-yellow-400 bg-yellow-600/20' : 'border-gray-500 bg-gray-700'
+                  }`}>
                   <PlayerAvatar name={currentRound.realPlayer.name} size={72} />
                 </div>
-                
+
                 <div className="flex-1">
                   <h3 className="text-2xl font-black text-white drop-shadow-md">
                     {currentRound.realPlayer.name}
                   </h3>
-                  
+
                   {/* Linha do Clube com Escudo Integrado */}
                   <div className="flex items-center gap-2 mt-1">
-                    <ClubBadge 
-                      clubIdOrName={currentRound.realPlayer.club || currentRound.realPlayer.club} 
-                      size="sm" 
+                    <ClubBadge
+                      clubIdOrName={currentRound.realPlayer.club || currentRound.realPlayer.club}
+                      size="sm"
                     />
                     <span className="text-sm font-semibold text-gray-300">
                       {currentRound.realPlayer.club}
@@ -218,9 +311,8 @@ export default function DraftCard() {
                     <p className="text-gray-400 text-[10px] uppercase font-semibold tracking-wider">
                       {ATTRIBUTE_ABBR[attr]}
                     </p>
-                    <p className={`text-lg font-black tabular-nums ${
-                      isExpert ? 'text-gray-600' : 'text-white'
-                    }`}>
+                    <p className={`text-lg font-black tabular-nums ${isExpert ? 'text-gray-600' : 'text-white'
+                      }`}>
                       {isExpert ? '??' : formatAttributeValue(attr, currentRound.realPlayer.attributes[attr])}
                     </p>
                   </div>
@@ -230,9 +322,8 @@ export default function DraftCard() {
                     <p className="text-gray-400 text-[10px] uppercase font-semibold tracking-wider">
                       {ATTRIBUTE_ABBR[attr]}
                     </p>
-                    <p className={`text-xs font-black tabular-nums ${
-                      isExpert ? 'text-gray-600' : 'text-yellow-400'
-                    }`}>
+                    <p className={`text-xs font-black tabular-nums ${isExpert ? 'text-gray-600' : 'text-yellow-400'
+                      }`}>
                       {isExpert ? '?' : formatAttributeValue(attr, currentRound.realPlayer.attributes[attr])}
                     </p>
                   </div>
@@ -256,11 +347,10 @@ export default function DraftCard() {
               key={attr}
               onClick={() => handleSteal(attr)}
               disabled={filled || stealing !== null || !showPlayer}
-              className={`p-2 rounded-lg text-xs font-semibold transition-all ${
-                filled
-                  ? 'bg-gray-800 text-gray-600 cursor-not-allowed border border-gray-700'
-                  : 'bg-green-600 hover:bg-green-500 text-white border border-green-400 hover:scale-105'
-              } ${stealing === attr ? 'ring-2 ring-yellow-400 scale-110' : ''}`}
+              className={`p-2 rounded-lg text-xs font-semibold transition-all ${filled
+                ? 'bg-gray-800 text-gray-600 cursor-not-allowed border border-gray-700'
+                : 'bg-green-600 hover:bg-green-500 text-white border border-green-400 hover:scale-105'
+                } ${stealing === attr ? 'ring-2 ring-yellow-400 scale-110' : ''}`}
             >
               {filled ? `${ATTRIBUTE_LABELS[attr]} ✓` : ATTRIBUTE_LABELS[attr]}
             </button>
@@ -277,11 +367,10 @@ export default function DraftCard() {
             return (
               <div
                 key={attr}
-                className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg border ${
-                  filled !== undefined
-                    ? 'bg-green-500/10 border-green-500/30'
-                    : 'bg-gray-800/40 border-gray-700'
-                }`}
+                className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg border ${filled !== undefined
+                  ? 'bg-green-500/10 border-green-500/30'
+                  : 'bg-gray-800/40 border-gray-700'
+                  }`}
               >
                 <span className={`text-xs w-8 ${filled !== undefined ? 'text-green-300' : 'text-gray-500'}`}>
                   {ATTRIBUTE_ABBR[attr]}

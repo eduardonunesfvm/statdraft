@@ -31,6 +31,11 @@ export const CLUB_COLORS: Record<string, ClubStyle> = {
   roma:        { bgFrom: '#7f1d1d', bgTo: '#ca8a04', textColor: '#ffffff' },
   zenit:       { bgFrom: '#38bdf8', bgTo: '#2563eb', textColor: '#ffffff' },
   monaco:      { bgFrom: '#dc2626', bgTo: '#f4f4f5', textColor: '#111827' },
+  mirassol:    { bgFrom: '#16a34a', bgTo: '#facc15', textColor: '#ffffff' },
+  bragantino:  { bgFrom: '#dc2626', bgTo: '#ffffff', textColor: '#dc2626' },
+  vitoria:     { bgFrom: '#dc2626', bgTo: '#09090b', textColor: '#ffffff' },
+  chapecoense: { bgFrom: '#16a34a', bgTo: '#09090b', textColor: '#ffffff' },
+  remo:        { bgFrom: '#1d4ed8', bgTo: '#dc2626', textColor: '#ffffff' },
   default:     { bgFrom: '#334155', bgTo: '#0f172a', textColor: '#f8fafc' }
   
 };
